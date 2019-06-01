@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'LoginInputField.dart';
 
 class LoginWidget extends StatelessWidget {
+  String imageSrc;
+
+  LoginWidget(this.imageSrc);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class LoginWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Image.asset('images/figma.png'),
+              Image.asset(imageSrc),
               LoginInputFieldWidget(Icon(Icons.person, color: Colors.white), "User Name"),
               LoginInputFieldWidget(Icon(Icons.lock, color: Colors.white), "Password"),
               Row(
