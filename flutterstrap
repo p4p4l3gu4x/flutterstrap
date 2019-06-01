@@ -8,25 +8,30 @@ import shutil
 @click.command()
 @click.option('--widget', nargs=1, help='The widget that you would like to generate.', type=str)
 def generate(widget):
-    """Flutterstrap generates Flutter customizable widgets out of the box."""
+    """Flutterstrap generates Flutter customizable widgets out of the box. \n
+    For example, run: \n
+        $ ./flutterstrap --widget login-form
+    """
 
-    base_url = 'https://github.com/p4p4l3gu4x/flutterstrap/blob/master/'
+    click.echo('generating file for widget in root dir...')
     if widget == 'login-form':
-        click.echo('generating file for widget in root dir...')
-        components_needed = ['textfield', ]
-        get_latest_file_version()
+        files_needed = ['Login.dart']
+        for i in range(0, len(files_needed)):
+            get_latest_widget_version(widget, files_needed[i])
 
 
+def get_latest_widget_version(widget, file):
 
-def get_latest_file_version(url):
+    base_url = 'https://github.com/p4p4l3gu4x/flutterstrap/blob/master/widgets'
+    url = base_url+"/"+widget+"/"+file
     filename = url.split("/")[-1]
-    path = "widgets/"
+    path = "widgets/"+widget+"/"
     c = urllib3.PoolManager()
 
     with c.request('GET', url, preload_content=False) as resp, open(path+filename, 'wb') as out_file:
         shutil.copyfileobj(resp, out_file)
 
-    resp.release_conn()  # not 100% sure this is required though
+    resp.release_conn()
 
 
 if __name__ == '__main__':
