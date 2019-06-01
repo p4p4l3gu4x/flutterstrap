@@ -3,32 +3,38 @@
 import click
 import urllib3
 import shutil
+import os
 
 
 @click.command()
-@click.option('--widget', nargs=1, help='The widget that you would like to generate.', type=str)
-def generate(widget):
-    """Flutterstrap generates Flutter customizable widgets out of the box. \n
+@click.option('--widget', help='The widget that you would like to generate.', type=str)
+@click.option('--target', help='The target of your Flutter project.', type=str)
+def generate(widget, target):
+    """Flutterstrap generates Flutter customizable widgets out of the box.
     For example, run: \n
-        $ ./flutterstrap --widget login-form
+
+    $ ./flutterstrap --widget login-form --target [PATH_TO_FLUTTER_PROJECT]
     """
 
     click.echo('generating file for widget in root dir...')
     if widget == 'login-form':
-        files_needed = ['Login.dart']
+        files_needed = ['Login.dart', 'LoginInputField.dart']
         for i in range(0, len(files_needed)):
-            get_latest_widget_version(widget, files_needed[i])
+            get_latest_widget_version(widget, files_needed[i], target)
 
 
-def get_latest_widget_version(widget, file):
-
-    base_url = 'https://github.com/p4p4l3gu4x/flutterstrap/blob/master/widgets'
-    url = base_url+"/"+widget+"/"+file
+def get_latest_widget_version(widget, file, target):
+    base_url = 'https://raw.githubusercontent.com/p4p4l3gu4x/flutterstrap/master/widgets'
+    url = base_url+"/" + widget + "/"+file
     filename = url.split("/")[-1]
-    path = "widgets/"+widget+"/"
+    flutter_project_dir = target+"/lib/"+widget+"/"
+    widget_dir = flutter_project_dir + filename
     c = urllib3.PoolManager()
 
-    with c.request('GET', url, preload_content=False) as resp, open(path+filename, 'wb') as out_file:
+    if not os.path.exists(flutter_project_dir):
+        os.makedirs(flutter_project_dir)
+
+    with c.request('GET', url, preload_content=False) as resp, open(widget_dir, 'wb') as out_file:
         shutil.copyfileobj(resp, out_file)
 
     resp.release_conn()
