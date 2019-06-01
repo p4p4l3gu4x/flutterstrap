@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'LoginInputField.dart';
 
 class LoginWidget extends StatelessWidget {
 
@@ -9,49 +10,31 @@ class LoginWidget extends StatelessWidget {
       height: 300,
       child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Container(
-                width: 300,
-                child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  color: Colors.deepOrange,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.person, color: Colors.white),
-                      ),
-                      Container(
-                        width: 260,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0)
-                          )
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: 'User Name'
-                            ),
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+              Image.asset('images/figma.png'),
+              LoginInputFieldWidget(Icon(Icons.person, color: Colors.white), "User Name"),
+              LoginInputFieldWidget(Icon(Icons.lock, color: Colors.white), "Password"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    child: RaisedButton(
+                      onPressed: (){},
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      child: Text('Login'),
+                    ),
+                  ),
+                  Container(
+                    child: RaisedButton(
+                      onPressed: (){},
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      child: Text('Forgout'),
+                    ),
                   )
-                )
+                ],
               )
             ],
           )
